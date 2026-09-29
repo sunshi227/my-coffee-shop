@@ -3,95 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Уютная Кофейня</title>
+    <title>Ароматная кофейня</title>
     <style>
         :root {
-            --bg-color: #fcf8f5;
-            --text-color: #2c221e;
-            --accent-color: #8c6239;
-            --card-bg: #4a3525; /* Цвет дубайского шоколада */
-            --card-text: #fff;
-            --btn-disabled: #ccc;
-            --btn-active: #e63946;
+            --bg-color: #f9f6f0;
+            --text-color: #333;
+            --accent-color: #6f4e37;
+            --card-bg: #fff;
         }
 
         body.coffee-theme {
-            --bg-color: #3b2314;
-            --text-color: #f4ece1;
-            --accent-color: #d4a373;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            --bg-color: #2c221e;
+            --text-color: #f5efe6;
+            --card-bg: #3d3028;
         }
 
         body {
+            font-family: Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.6;
-            padding-bottom: 80px;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         header {
             text-align: center;
-            padding: 40px 20px;
-            background: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        /* Навигационное меню кнопок */
         .nav-menu {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
+            margin-top: 15px;
         }
 
         .nav-btn {
             background-color: var(--accent-color);
-            color: #fff;
+            color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            border-radius: 30px;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, opacity 0.2s;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
+            font-size: 16px;
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        section {
-            margin-top: 40px;
         }
 
         h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 8px;
+            padding-bottom: 5px;
         }
 
-        /* Карточки закусок и кофе (столбиком в рамочке цвета дубайского шоколада) */
         .items-column {
             display: flex;
             flex-direction: column;
@@ -100,129 +67,74 @@
 
         .item-card {
             background-color: var(--card-bg);
-            color: var(--card-text);
-            border: 3px solid #6b4c33;
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .item-card:hover {
-            transform: scale(1.02);
-            border-color: #d4a373;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
         }
 
         .item-card.selected {
-            border-color: #e63946;
-            box-shadow: 0 0 15px rgba(230, 57, 70, 0.4);
+            border-color: var(--accent-color);
         }
 
         .item-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+            margin: 0 0 5px 0;
         }
 
         .item-info p {
-            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+            font-size: 14px;
             opacity: 0.8;
         }
 
         .item-price {
-            font-size: 1.1rem;
             font-weight: bold;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 12px;
-            border-radius: 10px;
+            color: var(--accent-color);
         }
 
-        /* Главная фиксированная кнопка заказа */
+        /* Фиксированная кнопка заказа внизу */
         .order-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: var(--bg-color);
+            background-color: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             padding: 15px;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-            text-align: center;
             display: flex;
             justify-content: center;
-            z-index: 100;
+            box-sizing: border-box;
         }
 
         #orderBtn {
-            background-color: var(--btn-disabled);
+            background-color: #ccc;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
             font-weight: bold;
-            border-radius: 40px;
             cursor: not-allowed;
-            transition: background-color 0.3s, transform 0.2s;
             width: 100%;
             max-width: 400px;
         }
 
         #orderBtn.active {
-            background-color: var(--btn-active);
+            background-color: #28a745;
             cursor: pointer;
-        }
-
-        #orderBtn.active:hover {
-            transform: scale(1.03);
-        }
-
-        /* Страница оплаты / Успешного заказа */
-        #paymentSection {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .order-number-box {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--btn-active);
-            background: rgba(0,0,0,0.05);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px auto;
-            max-width: 250px;
-            border: 2px dashed var(--accent-color);
-        }
-
-        .back-btn {
-            background: transparent;
-            color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .back-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
         }
     </style>
 </head>
 <body>
 
     <header id="mainHeader">
-        <h1>☕ Ароматная Кофейня</h1>
+        <h1>Ароматная кофейня</h1>
         <p>Выберите удовольствие по душе</p>
-       
         <div class="nav-menu">
-            <button class="nav-btn" onclick="scrollToSection('snacksSection')">🍕 Закуски</button>
-            <button class="nav-btn" onclick="scrollToSection('coffeeSection')">☕ Кофе</button>
+            <button class="nav-btn" onclick="scrollToSection('snacksSection')">Закуски</button>
+            <button class="nav-btn" onclick="scrollToSection('coffeeSection')">Кофе</button>
         </div>
     </header>
 
@@ -245,18 +157,11 @@
                     </div>
                     <div class="item-price">350 ₽</div>
                 </div>
-                <div class="item-card" onclick="selectItem(this, 'Чизкейк Нью-Йорк', 300)">
-                    <div class="item-info">
-                        <h3>Чизкейк Нью-Йорк</h3>
-                        <p>Нежный классический десерт</p>
-                    </div>
-                    <div class="item-price">300 ₽</div>
-                </div>
             </div>
         </section>
 
         <!-- Секция кофе -->
-        <section id="coffeeSection">
+        <section id="coffeeSection" style="margin-top: 40px;">
             <h2>Кофе</h2>
             <div class="items-column">
                 <div class="item-card" onclick="selectItem(this, 'Капучино', 200); toggleCoffeeTheme(true)">
@@ -273,25 +178,9 @@
                     </div>
                     <div class="item-price">230 ₽</div>
                 </div>
-                <div class="item-card" onclick="selectItem(this, 'Раф Кокосовый', 280); toggleCoffeeTheme(true)">
-                    <div class="item-info">
-                        <h3>Раф Кокосовый</h3>
-                        <p>Сливки, эспрессо и ароматный кокосовый сироп</p>
-                    </div>
-                    <div class="item-price">280 ₽</div>
-                </div>
             </div>
         </section>
     </div>
-
-    <!-- Секция оплаты (изначально скрыта) -->
-    <section id="paymentSection" class="container">
-        <h2>Оплата заказа</h2>
-        <p>Ваш заказ успешно сформирован!</p>
-        <div class="order-number-box" id="orderNumberDisplay">#--</div>
-        <p>Покажите этот номер бариста на кассе.</p>
-        <button class="back-btn" onclick="resetOrder()">Сделать новый заказ</button>
-    </section>
 
     <!-- Фиксированная кнопка заказа внизу -->
     <div class="order-bar" id="orderBar">
@@ -304,7 +193,9 @@
         // Плавная прокрутка к нужной секции
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
-            element.scrollIntoView({ behavior: 'smooth' });
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         // Выбор товара
@@ -313,87 +204,57 @@
             document.querySelectorAll('.item-card').forEach(card => {
                 card.classList.remove('selected');
             });
-
+           
             // Выделяем текущую
             cardElement.classList.add('selected');
             selectedProduct = { name: productName, price: price };
-
+           
             // Активируем кнопку заказа
             const btn = document.getElementById('orderBtn');
-            btn.classList.add('active');
-            btn.style.cursor = 'pointer';
-            btn.textContent = `Заказать: ${productName} (${price} ₽)`;
+            if (btn) {
+                btn.classList.add('active');
+                btn.style.cursor = 'pointer';
+                btn.textContent = `Заказать: ${productName} (${price} ₽)`;
+            }
         }
 
-        // Смена тона сайта на более кофейный при выборе кофе
+        // Смена тона сайта при выборе кофе
         function toggleCoffeeTheme(isCoffee) {
             if (isCoffee) {
                 document.body.classList.add('coffee-theme');
             }
         }
 
-        // Переход к оплате
-        function proceedToPayment() {
-            if (!selectedProduct) return;
+        // Главная функция отправки заказа в Telegram
+        function sendOrderToTelegram() {
+            if (!selectedProduct) {
+                alert("Пожалуйста, выберите товар!");
+                return;
+            }
 
-            // Генерируем случайный номер заказа от 1 до 100
-            const randomOrderNum = Math.floor(Math.random() * 100) + 1;
-            document.getElementById('orderNumberDisplay.innerHTML', `#${randomOrderNum}`);
-            document.getElementById('orderNumberDisplay').textContent = `#${randomOrderNum}`;
+            const botToken = '8724452925:AAF70s6GFnkWloVqrm327150nHlCU-U_Dd4';
+            const chatId = '5389715058';
+           
+            const orderDetails = `☕ Новый заказ!\nТовар: ${selectedProduct.name}\nЦена: ${selectedProduct.price} руб.\nВремя: ${new Date().toLocaleTimeString()}`;
+           
+            const text = encodeURIComponent(orderDetails);
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${text}`;
 
-            // Скрываем меню, показываем экран оплаты
-            document.getElementById('menuContainer').style.display = 'none';
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('orderBar').style.display = 'none';
-            document.getElementById('paymentSection').style.display = 'block';
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Сброс заказа назад в меню
-        function resetOrder() {
-            selectedProduct = null;
-            document.querySelectorAll('.item-card').forEach(card => card.classList.remove('selected'));
-            document.body.classList.remove('coffee-theme');
-
-            const btn = document.getElementById('orderBtn');
-            btn.classList.remove('active');
-            btn.textContent = 'Ничего не выбрано';
-
-            document.getElementById('paymentSection').style.display = 'none';
-            document.getElementById('menuContainer').style.display = 'block';
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('orderBar').style.display = 'flex';
+            // Отправляем запрос в Telegram
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("Заказ успешно отправлен бариста!");
+                    } else {
+                        alert("Ошибка при отправке заказа в Telegram.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Ошибка:", error);
+                    alert("Произошла ошибка сети.");
+                });
         }
     </script>
-function sendOrderToTelegram() {
-    // Данные, которые вы получили от BotFather и UserInfoBot
-    const botToken = '8724452925:AAF70s6GFhkW1oVqrm327I50nHlcU-U_Dd4';
-    const chatId = '5389715058';
-   
-    // То, что заказал клиент (в будущем сюда можно подставлять переменные из корзины)
-    const orderDetails = "Новый заказ: Капучино (250 руб.) - 1 шт.";
-   
-    // Формируем текст сообщения
-    const message = encodeURIComponent(orderDetails);
-   
-    // Ссылка для отправки сообщения через Telegram API
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
-
-    // Отправляем запрос
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                alert("Заказ успешно отправлен бариста!");
-            } else {
-                alert("Ошибка при отправке заказа.");
-            }
-        })
-        .catch(error => {
-            console.error("Ошибка:", error);
-        });
-}
-</script>
 </body>
 </html>
