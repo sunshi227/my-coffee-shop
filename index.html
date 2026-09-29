@@ -295,7 +295,7 @@
 
     <!-- Фиксированная кнопка заказа внизу -->
     <div class="order-bar" id="orderBar">
-        <button id="orderBtn" onclick="proceedToPayment()">Ничего не выбрано</button>
+        <button id="orderBtn" onclick="sendOrderToTelegram()">Ничего не выбрано</button>
     </div>
 
     <script>
@@ -365,29 +365,6 @@
             document.getElementById('mainHeader').style.display = 'block';
             document.getElementById('orderBar').style.display = 'flex';
         }
-    function sendOrder() {
-    const orderData = {
-        item: "Капучино",
-        price: 250,
-        time: new Date().toLocaleTimeString()
-    };
-
-    // Отправка данных на ваш сервер или в облако
-    fetch('https://ваш-сервер-или-база.com/api/orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert("Заказ успешно отправлен бариста!");
-    })
-    .catch(error => {
-        console.error("Ошибка при отправке заказа:", error);
-    });
-}
 function sendOrderToTelegram() {
     // Данные, которые вы получили от BotFather и UserInfoBot
     const botToken = '8724452925:AAF70s6GFhkW1oVqrm327I50nHlcU-U_Dd4';
