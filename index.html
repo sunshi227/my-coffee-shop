@@ -94,7 +94,6 @@
             color: var(--accent-color);
         }
 
-        /* Фиксированная кнопка заказа внизу */
         .order-bar {
             position: fixed;
             bottom: 0;
@@ -139,7 +138,6 @@
     </header>
 
     <div class="container" id="menuContainer">
-        <!-- Секция закусок -->
         <section id="snacksSection">
             <h2>Закуски</h2>
             <div class="items-column">
@@ -160,7 +158,6 @@
             </div>
         </section>
 
-        <!-- Секция кофе -->
         <section id="coffeeSection" style="margin-top: 40px;">
             <h2>Кофе</h2>
             <div class="items-column">
@@ -182,77 +179,71 @@
         </section>
     </div>
 
-    <!-- Фиксированная кнопка заказа внизу -->
     <div class="order-bar" id="orderBar">
         <button id="orderBtn" onclick="sendOrderToTelegram()">Ничего не выбрано</button>
     </div>
 
     <script>
-        let selectedProduct = null;
+        var selectedProduct = null;
 
-        // Плавная прокрутка к нужной секции
         function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
+            var element = document.getElementById(sectionId);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Выбор товара
         function selectItem(cardElement, productName, price) {
-            // Убираем выделение со всех карточек
-            document.querySelectorAll('.item-card').forEach(card => {
-                card.classList.remove('selected');
-            });
+            var cards = document.querySelectorAll('.item-card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('selected');
+            }
            
-            // Выделяем текущую
             cardElement.classList.add('selected');
             selectedProduct = { name: productName, price: price };
            
-            // Активируем кнопку заказа
-            const btn = document.getElementById('orderBtn');
+            var btn = document.getElementById('orderBtn');
             if (btn) {
                 btn.classList.add('active');
                 btn.style.cursor = 'pointer';
-                btn.textContent = `Заказать: ${productName} (${price} ₽)`;
+                btn.textContent = 'Заказать: ' + productName + ' (' + price + ' ₽)';
             }
         }
 
-        // Смена тона сайта при выборе кофе
         function toggleCoffeeTheme(isCoffee) {
             if (isCoffee) {
                 document.body.classList.add('coffee-theme');
             }
         }
 
-        // Главная функция отправки заказа в Telegram
         function sendOrderToTelegram() {
             if (!selectedProduct) {
-                alert("Пожалуйста, выберите товар!");
+                alert('Пожалуйста, выберите товар!');
                 return;
             }
 
-            const botToken = '8724452925:AAF70s6GFnkWloVqrm327150nHlCU-U_Dd4';
-            const chatId = '5389715058';
+            var botToken = '8724452925:AAF70s6GFnkWloVqrm327150nHlCU-U_Dd4';
+            var chatId = '5389715058';
            
-            const orderDetails = `☕ Новый заказ!\nТовар: ${selectedProduct.name}\nЦена: ${selectedProduct.price} руб.\nВремя: ${new Date().toLocaleTimeString()}`;
+            var orderDetails = '☕ Новый заказ!\nТовар: ' + selectedProduct.name + '\nЦена: ' + selectedProduct.price + ' руб.\nВремя: ' + new Date().toLocaleTimeString();
            
-            const text = encodeURIComponent(orderDetails);
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${text}`;
+            var text = encodeURIComponent(orderDetails);
+            var url = 'https://api.telegram.org/bot' + botToken + '/sendMessage?chat_id=' + chatId + '&text=' + text;
 
-            // Отправляем запрос в Telegram
             fetch(url)
-                .then(response => response.json())
-                .then(data => {
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
                     if (data.ok) {
-                        alert("Заказ успешно отправлен бариста!");
+                        alert('Заказ успешно отправлен бариста!');
                     } else {
-                        alert("Ошибка при отправке заказа в Telegram.");
+                        alert('Ошибка при отправке заказа в Telegram.');
                     }
                 })
-                .catch(error => {
-                    console.error("Ошибка:", error);
-                    alert("Произошла ошибка сети.");
+                .catch(function(error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка сети.');
                 });
         }
     </script>
