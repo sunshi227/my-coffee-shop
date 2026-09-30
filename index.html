@@ -280,13 +280,12 @@
                 document.body.classList.add('coffee-theme');
             }
         }
-
         // Переход к экрану оплаты/номера заказа
-         function proceedToPayment() {
+          function proceedToPayment() {
             if (!selectedProduct) return;
 
             // Отправка данных на ваш сервер Vercel
-            fetch('https://my-coffee-shop-delta.vercel.app', {
+            fetch('https://my-coffee-shop.vercel.app/api/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -316,7 +315,6 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
         // Сброс заказа назад в меню
         function resetOrder() {
             selectedProduct = null;
