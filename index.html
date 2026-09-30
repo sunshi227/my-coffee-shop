@@ -282,14 +282,33 @@
         }
 
         // Переход к экрану оплаты/номера заказа
-        function proceedToPayment() {
+         function proceedToPayment() {
             if (!selectedProduct) return;
 
-            // Генерируем случайный номер заказа от 1 до 100
+            // Отправка данных на ваш сервер Vercel
+            fetch('https://my-coffee-shop.vercel.app/api/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productName: selectedProduct.name,
+                    price: selectedProduct.price
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Заказ отправлен на сервер:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка отправки:', error);
+            });
+
+            // Генерация случайного номера заказа для клиента от 1 до 100
             var randomOrderNum = Math.floor(Math.random() * 100) + 1;
             document.getElementById('orderNumberDisplay').textContent = '#' + randomOrderNum;
 
-            // Скрываем меню, показываем экран оплаты
+            // Скрытие меню и показ экрана оплаты
             document.getElementById('menuContainer').style.display = 'none';
             document.getElementById('mainHeader').style.display = 'none';
             document.getElementById('orderBar').style.display = 'none';
