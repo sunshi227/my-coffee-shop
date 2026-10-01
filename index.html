@@ -15,7 +15,8 @@
         body.coffee-theme {
             --bg-color: #2c221e;
             --text-color: #f5efe6;
-            --card-bg: #3d3028;
+            --accent-color: #d38028;
+            --card-bg: #3d3828;
         }
 
         body {
@@ -32,7 +33,7 @@
             margin-bottom: 30px;
         }
 
-        .nav-menu {
+        .navigation-menu {
             display: flex;
             justify-content: center;
             gap: 15px;
@@ -68,11 +69,11 @@
         .item-card {
             background-color: var(--card-bg);
             padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             cursor: pointer;
             border: 2px solid transparent;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s;
         }
 
         .item-card.selected {
@@ -95,16 +96,16 @@
         }
 
         /* Экран оплаты / заказа */
-        #paymentSection {
+        .payment-section {
             display: none;
             text-align: center;
             background-color: var(--card-bg);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .order-number-box {
+        .box-with-order-number {
             font-size: 32px;
             font-weight: bold;
             color: var(--accent-color);
@@ -130,7 +131,7 @@
         }
 
         /* Фиксированная кнопка внизу */
-        .order-bar {
+        .панель-заказов {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -147,7 +148,7 @@
             background-color: #ccc;
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 32px;
             border-radius: 25px;
             font-size: 18px;
             font-weight: bold;
@@ -157,7 +158,7 @@
         }
 
         #orderBtn.active {
-            background-color: #28a745;
+            background-color: var(--accent-color);
             cursor: pointer;
         }
     </style>
@@ -167,13 +168,14 @@
     <header id="mainHeader">
         <h1>Ароматная кофейня</h1>
         <p>Выберите удовольствие по душе</p>
-        <div class="nav-menu">
+        <div class="navigation-menu">
             <button class="nav-btn" onclick="scrollToSection('snacksSection')">Закуски</button>
             <button class="nav-btn" onclick="scrollToSection('coffeeSection')">Кофе</button>
         </div>
     </header>
 
     <div class="container" id="menuContainer">
+       
         <!-- Секция закусок -->
         <section id="snacksSection">
             <h2>Закуски</h2>
@@ -202,14 +204,14 @@
             </div>
         </section>
 
-        <!-- Секция кофе -->
+        <!-- Раздел кофе -->
         <section id="coffeeSection" style="margin-top: 40px;">
             <h2>Кофе</h2>
             <div class="items-column">
                 <div class="item-card" onclick="selectItem(this, 'Капучино', 200); toggleCoffeeTheme(true)">
                     <div class="item-info">
                         <h3>Капучино</h3>
-                        <p>Классический эспрессо с пышной молочной пенкой</p>
+                        <p>Классический эспрессо с плотной молочной пенкой</p>
                     </div>
                     <div class="item-price">200 ₽</div>
                 </div>
@@ -229,19 +231,20 @@
                 </div>
             </div>
         </section>
+
     </div>
 
-    <!-- Секция оплаты (изначально скрыта) -->
-    <section id="paymentSection" class="container">
+    <!-- Раздел оплаты (изначально скрыт) -->
+    <div id="paymentSection" class="payment-section container">
         <h2>Оплата заказа</h2>
         <p>Ваш заказ успешно сформирован!</p>
-        <div class="order-number-box" id="orderNumberDisplay">#--</div>
-        <p>Покажите этот номер бариста на кассе.</p>
+        <div class="box-with-order-number" id="orderNumberDisplay">#1</div>
+        <p>Покажите этот номер бариста на кассе</p>
         <button class="back-btn" onclick="resetOrder()">Сделать новый заказ</button>
-    </section>
+    </div>
 
     <!-- Фиксированная кнопка заказа внизу -->
-    <div class="order-bar" id="orderBar">
+    <div class="панель-заказов" id="orderBar">
         <button id="orderBtn" onclick="proceedToPayment()">Ничего не выбрано</button>
     </div>
 
@@ -262,10 +265,11 @@
             for (var i = 0; i < cards.length; i++) {
                 cards[i].classList.remove('selected');
             }
-           
+
             cardElement.classList.add('selected');
+
             selectedProduct = { name: productName, price: price };
-           
+
             var btn = document.getElementById('orderBtn');
             if (btn) {
                 btn.classList.add('active');
@@ -280,12 +284,13 @@
                 document.body.classList.add('coffee-theme');
             }
         }
+
         // Переход к экрану оплаты/номера заказа
-          function proceedToPayment() {
+        function proceedToPayment() {
             if (!selectedProduct) return;
 
             // Отправка данных на ваш сервер Vercel
-            fetch('https://my-coffee-shop.vercel.app/api/order', {
+            fetch('https://my-coffee-shop-delta.vercel.app/api/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -315,20 +320,22 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
         // Сброс заказа назад в меню
         function resetOrder() {
             selectedProduct = null;
-           
+
             var cards = document.querySelectorAll('.item-card');
             for (var i = 0; i < cards.length; i++) {
                 cards[i].classList.remove('selected');
             }
-           
+
             document.body.classList.remove('coffee-theme');
-           
+
             var btn = document.getElementById('orderBtn');
             if (btn) {
                 btn.classList.remove('active');
+                btn.style.cursor = 'not-allowed';
                 btn.textContent = 'Ничего не выбрано';
             }
 
